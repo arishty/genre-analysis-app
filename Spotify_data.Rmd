@@ -10,9 +10,9 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ## R Markdown
+Data Extraction and Cleaning
 
-
-```{r cars}
+```{r Spotify Data Extraction to CSV}
 library('spotifyr')
 library('ggplot2')
 
@@ -41,7 +41,7 @@ for (i in 1:nrow(playlist_audio_features)){
 }
 
 song_df = playlist_audio_features %>% mutate(artist = artist_vec) %>%
-  select(song = track.name, artist, genre=playlist_name, danceability, energy, key, loudness, mode, speechiness, acousticness, instrumentalness, liveness, valence, tempo, time_signature, key_mode, popularity = track.popularity)
+  select(song = track.name, artist, genre=playlist_name, danceability, energy, key, loudness, mode, speechiness, acousticness, instrumentalness, liveness, valence, tempo, time_signature, popularity = track.popularity) %>% mutate(popularity = popularity/100, time_signature = time_signature-3, loudness = abs(loudness)/60, key = key/100, tempo = tempo/1000)
 
 
 
@@ -63,7 +63,7 @@ song_df <- song_df %>% mutate(genre= gsub("Blues Classics", "Blues", genre, fixe
 song_df <- song_df %>% mutate(genre= gsub("Pop Punk Powerhouses", "Punk", genre, fixed=TRUE))
 song_df <- song_df %>% mutate(genre= gsub("Disco Forever", "Disco/Funk", genre, fixed=TRUE))
 song_df <- song_df %>% mutate(genre= gsub("The Essential Ska", "Ska", genre, fixed=TRUE))
-song_df <- song_df %>% mutate(genre= gsub("Dance/Electronic", "EDM", genre, fixed=TRUE)) 
+song_df <- song_df %>% mutate(genre= gsub("Dance Hits", "EDM", genre, fixed=TRUE))
 
 
 write.csv(song_df,"Spotify_data.csv", row.names = FALSE)

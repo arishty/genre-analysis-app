@@ -35,13 +35,13 @@ fluidPage(
       ),
       selectizeInput(inputId = "x",
                      label = "X Metric",
-                     choices = names(songs)[4:17],
+                     choices = names(songs)[4:16],
                      selected = names(songs)[13]
                      ),
       
       selectizeInput(inputId = "y",
                      label = "Y Metric",
-                     choices = names(songs)[4:17],
+                     choices = names(songs)[4:16],
                      selected = names(songs)[5]
                      )
     ),
@@ -52,8 +52,8 @@ fluidPage(
       tabsetPanel(type = "tabs",
                   tabPanel("Explore", font="black", plotlyOutput("explore_songs", height="700px")),
                   tabPanel("Average", plotlyOutput("average_plotly", height="700px")),
-                  tabPanel("Summary of Y Metric", plotOutput("summary")),
-                  tabPanel("Glossary of Metrics", tableOutput("glossary"))
+                  tabPanel("Summary of Y Metric", plotOutput("summary", height="700px")),
+                  tabPanel("Glossary", tableOutput("glossary"))
       )
     )
   )
