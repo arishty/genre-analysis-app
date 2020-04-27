@@ -1,13 +1,9 @@
 
 fluidPage(
-  tags$header(),
   tags$head(tags$style(
     HTML('
-         #title {
-            background-color: #1DB954;
-         }
         #sidebar {
-            background-color: #000000;
+            background-color: #191414;
             color: white
         }
         #header {
@@ -17,22 +13,24 @@ fluidPage(
           color: white;
           font-size: 20px;
         }
-
         body, label, input, checkboxGroupInput, button, select { 
           font: "Cambria";
           font-weight: bold;
-        }')
+        }
+         ')
   )),
   
   tags$header(h1("Genretics"), id="header"), 
   
   sidebarLayout(
+    
     sidebarPanel(
       id="sidebar",
       width=3,
       checkboxGroupInput("checked_genres", label = h3("Genres"), 
                          choices = sort(unique(songs$genre)), selected=sort(unique(songs$genre))[1]
       ),
+      
       selectizeInput(inputId = "x",
                      label = "X Metric",
                      choices = names(songs)[4:16],
@@ -45,7 +43,6 @@ fluidPage(
                      selected = names(songs)[5]
                      )
     ),
-    
     
     mainPanel(
       width=9,

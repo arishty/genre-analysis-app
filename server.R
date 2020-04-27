@@ -36,19 +36,7 @@ function(input, output) {
   
   )
   
-  output$summary_plotly <- renderPlotly(
-    
-    songs %>% group_by(genre) %>% select(genre, y = input$y) %>%
-      summarize(avg_y = mean(y)) %>%
-      ggplot(., aes(x=reorder(genre, avg_y), y= avg_y))
-    + labs(x = "genre", y = input$y)
-    + geom_col(aes(fill=genre))
-    + scale_x_discrete(labels = c("Alternative Rock" = "Alt Rock", "Classic Rock" = "Class. Rock", "Disco/Funk" = "Disco",
-                                  "Progressive Rock" = "Prog Rock", "Video Game Soundtracks" = "Video Gm"))
-    + ggtitle(paste0(input$y, " by genre"))
-    
-  )
-
+ 
   output$summary <- renderPlot(
     
     songs %>% group_by(genre) %>% select(genre, y = input$y) %>%
@@ -64,6 +52,22 @@ function(input, output) {
     width = 1050
     
   )
+  
+  
+  # plotly version of summary plot, still being developed
+  output$summary_plotly <- renderPlotly(
+    
+    songs %>% group_by(genre) %>% select(genre, y = input$y) %>%
+      summarize(avg_y = mean(y)) %>%
+      ggplot(., aes(x=reorder(genre, avg_y), y= avg_y))
+    + labs(x = "genre", y = input$y)
+    + geom_col(aes(fill=genre))
+    + scale_x_discrete(labels = c("Alternative Rock" = "Alt Rock", "Classic Rock" = "Class. Rock", "Disco/Funk" = "Disco",
+                                  "Progressive Rock" = "Prog Rock", "Video Game Soundtracks" = "Video Gm"))
+    + ggtitle(paste0(input$y, " by genre"))
+    
+  )
+  
   
   output$glossary <- renderTable(
     

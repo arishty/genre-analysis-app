@@ -29,7 +29,6 @@ head(playlist_audio_features)
 names(playlist_audio_features)
 
 
-
 #Extract first artist's name from each song's list of artists/profile
 artist_vec = c()
 for (i in 1:nrow(playlist_audio_features)){
@@ -40,9 +39,9 @@ for (i in 1:nrow(playlist_audio_features)){
   artist_vec = c(artist_vec, playlist_audio_features$track.artists[[i]]$name[1])
 }
 
-song_df = playlist_audio_features %>% mutate(artist = artist_vec) %>%
-  select(song = track.name, artist, genre=playlist_name, danceability, energy, key, loudness, mode, speechiness, acousticness, instrumentalness, liveness, valence, tempo, time_signature, popularity = track.popularity) %>% mutate(popularity = popularity/100, time_signature = time_signature-3, loudness = abs(loudness)/60, key = key/100, tempo = tempo/1000)
 
+song_df = playlist_audio_features %>% mutate(artist = artist_vec) %>%
+  select(song = track.name, artist, genre=playlist_name, danceability, energy, key, loudness, mode, speechiness, acousticness, instrumentalness, liveness, valence, tempo, time_signature, popularity = track.popularity) %>% mutate(popularity = popularity/100, time_signature =  time_signature-3, loudness = (loudness+60)/60, key = key/100, tempo = tempo/1000)
 
 
 song_df <- song_df %>% mutate(genre= gsub("Prog Rock Monsters", "Progressive Rock", genre, fixed=TRUE))
