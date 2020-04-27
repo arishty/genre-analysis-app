@@ -5,7 +5,7 @@ function(input, output) {
   songs_genres = reactive(
     
     songs %>%
-      filter(genre == input$checked_genres)
+      filter(genre %in% input$checked_genres)
     
   )
   
@@ -16,8 +16,7 @@ function(input, output) {
  
   output$explore_songs <- renderPlotly(
     
-    songs %>%
-      filter(genre == input$checked_genres) %>%  
+    songs_genres() %>%  
       ggplot(., aes_string(x=input$x, y=input$y))
     + geom_point(aes(color = genre, text=paste("Song:", song, "\nArtist:", artist)), size=4)
     + ggtitle("Explore Track Metrics by Genre")
