@@ -2,7 +2,8 @@ library(shiny)
 library(dplyr)
 library(ggplot2)
 library(extrafont)
-#library(plotly)
-#install.packages(plotly)
+library(plotly)
+library(gapminder)
+
 
 songs = read.csv(file = 'Spotify_data.csv')

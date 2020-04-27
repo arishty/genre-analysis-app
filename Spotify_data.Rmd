@@ -21,7 +21,7 @@ Sys.setenv(SPOTIFY_CLIENT_SECRET = '4f5774c394e6407588489ae09a25353b')
 
 
 playlist_username <- 'spotify'
-playlist_uris <- c('37i9dQZF1DX0uqkwkR49kK', '37i9dQZF1DWWEJlAGA9gs0', '37i9dQZF1DWWGFQLoP9qlv', '37i9dQZF1DX9GRpeH4CL0S', '37i9dQZF1DWT5MrZnPU1zD', '37i9dQZF1DXbYM3nMM0oPk', '37i9dQZF1DWTkxQvqMy4WW', '37i9dQZF1DX4SBhb3fqCJd', '37i9dQZF1DWVcbzTgVpNRm', '37i9dQZF1DX6z20IXmBjWI', '37i9dQZF1DXbITWG1ZJKYt', '37i9dQZF1DWULEW2RfoSCi', '37i9dQZF1DXdfOcg1fm0VG', '37i9dQZF1DWWOaP4H0w5b0', '37i9dQZF1DXbSbnqxMTGx9', '37i9dQZF1DXd9rSDyQguIk', '37i9dQZF1DXa9wYJr1oMFq', '37i9dQZF1DX1MUPbVKMgJE', '37i9dQZF1DX7WJ4yDmRK8R')
+playlist_uris <- c('37i9dQZF1DX0uqkwkR49kK', '37i9dQZF1DWWEJlAGA9gs0', '37i9dQZF1DWWGFQLoP9qlv', '37i9dQZF1DX9GRpeH4CL0S', '37i9dQZF1DWT5MrZnPU1zD', '37i9dQZF1DXbYM3nMM0oPk', '37i9dQZF1DWTkxQvqMy4WW', '37i9dQZF1DX4SBhb3fqCJd', '37i9dQZF1DWVcbzTgVpNRm', '37i9dQZF1DX6z20IXmBjWI', '37i9dQZF1DXbITWG1ZJKYt', '37i9dQZF1DWULEW2RfoSCi', '37i9dQZF1DXdfOcg1fm0VG', '37i9dQZF1DWWOaP4H0w5b0', '37i9dQZF1DXbSbnqxMTGx9', '37i9dQZF1DXd9rSDyQguIk', '37i9dQZF1DXa9wYJr1oMFq', '37i9dQZF1DX1MUPbVKMgJE', '37i9dQZF1DX7WJ4yDmRK8R', '37i9dQZF1DX0BcQWzuB7ZO')
 
 playlist_audio_features <- get_playlist_audio_features(playlist_username, playlist_uris)
 
@@ -63,8 +63,9 @@ song_df <- song_df %>% mutate(genre= gsub("Blues Classics", "Blues", genre, fixe
 song_df <- song_df %>% mutate(genre= gsub("Pop Punk Powerhouses", "Punk", genre, fixed=TRUE))
 song_df <- song_df %>% mutate(genre= gsub("Disco Forever", "Disco/Funk", genre, fixed=TRUE))
 song_df <- song_df %>% mutate(genre= gsub("The Essential Ska", "Ska", genre, fixed=TRUE))
+song_df <- song_df %>% mutate(genre= gsub("Dance/Electronic", "EDM", genre, fixed=TRUE)) 
 
-dim(song_df)
+
 write.csv(song_df,"Spotify_data.csv", row.names = FALSE)
 
 ```
@@ -74,7 +75,8 @@ write.csv(song_df,"Spotify_data.csv", row.names = FALSE)
 You can also embed plots, for example:
 
 ```{r pressure, echo=FALSE}
-ggplot(data=playlist_audio_features, aes(x=playlist_name, y=instrumentalness)) + geom_boxplot()
+song_df %>% 
+      ggplot(., aes(x=valence, y=energy)) + geom_point(aes(color = genre, size=6)) + ggtitle("Explore Track Metrics by Genre")
 
 ```
 

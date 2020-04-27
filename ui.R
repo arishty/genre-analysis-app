@@ -32,7 +32,7 @@ fluidPage(
       id="sidebar",
       width=3,
       checkboxGroupInput("checked_genres", label = h3("Genres"), 
-                         choices = sort(unique(songs$genre)), selected="Alternative Rock"
+                         choices = sort(unique(songs$genre)), selected=sort(unique(songs$genre))[1]
       ),
       selectizeInput(inputId = "x",
                      label = "X Metric",
@@ -51,11 +51,12 @@ fluidPage(
     mainPanel(
       width=9,
       tabsetPanel(type = "tabs",
-                  tabPanel("Explore", font="black", plotOutput("explore")),
-                  tabPanel("Average", plotOutput("average")),
+                  tabPanel("Explore", font="black", plotlyOutput("explore_songs", height="700px")),
+                  tabPanel("Average", plotlyOutput("average_plotly", height="700px")),
+                  #tabPanel("Average", plotOutput("average")),
                   tabPanel("Summary of Y Metric", plotOutput("summary"))
                   #tabPanel("Glossary", ...("glossary"))
-      ),
+      )
     )
   )
 
