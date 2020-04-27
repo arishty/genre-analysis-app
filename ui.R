@@ -1,5 +1,3 @@
-# fluidPage controls screen org / resizing for you! also sidebar layout does that
-#everything is comma separated in fluidpage function, all parameters
 
 fluidPage(
   tags$header(),
@@ -25,7 +23,8 @@ fluidPage(
           font-weight: bold;
         }')
   )),
-  tags$header(h1("Genretics"), role="banner", id="header"), #shiny::tags$h1 -> tags is writing html for me -> <h1>
+  
+  tags$header(h1("Genretics"), id="header"), 
   
   sidebarLayout(
     sidebarPanel(
@@ -53,9 +52,8 @@ fluidPage(
       tabsetPanel(type = "tabs",
                   tabPanel("Explore", font="black", plotlyOutput("explore_songs", height="700px")),
                   tabPanel("Average", plotlyOutput("average_plotly", height="700px")),
-                  #tabPanel("Average", plotOutput("average")),
-                  tabPanel("Summary of Y Metric", plotOutput("summary"))
-                  #tabPanel("Glossary", ...("glossary"))
+                  tabPanel("Summary of Y Metric", plotOutput("summary")),
+                  tabPanel("Glossary of Metrics", tableOutput("glossary"))
       )
     )
   )
