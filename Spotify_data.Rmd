@@ -15,9 +15,10 @@ Data Extraction and Cleaning
 ```{r Spotify Data Extraction to CSV}
 library('spotifyr')
 library('ggplot2')
+library('dplyr')
 
-Sys.setenv(SPOTIFY_CLIENT_ID = '0485df77ffce426caf91a3f6c52a1d30')
-Sys.setenv(SPOTIFY_CLIENT_SECRET = '4f5774c394e6407588489ae09a25353b')
+Sys.setenv(SPOTIFY_CLIENT_ID = Sys.getenv("SPOTIFY_CLIENT_ID"))
+Sys.setenv(SPOTIFY_CLIENT_SECRET = Sys.getenv("SPOTIFY_CLIENT_SECRET"))
 
 
 playlist_username <- 'spotify'
@@ -31,14 +32,18 @@ names(playlist_audio_features)
 
 #Extract first artist's name from each song's list of artists/profile
 artist_vec = c()
+null_vec = c()
 for (i in 1:nrow(playlist_audio_features)){
   
   if(is.null(playlist_audio_features$track.artists[[i]]$name[1])){
     print(i)
+    null_vec = c(null_vec, i)
   }
   artist_vec = c(artist_vec, playlist_audio_features$track.artists[[i]]$name[1])
 }
 
+playlist_audio_features <- playlist_audio_features[-null_vec,]
+#artist_vec <- artist_vec[-null_vec]
 
 song_df = playlist_audio_features %>% mutate(artist = artist_vec) %>%
   select(song = track.name, artist, genre=playlist_name, danceability, energy, key, loudness, mode, speechiness, acousticness, instrumentalness, liveness, valence, tempo, time_signature, popularity = track.popularity) %>% mutate(popularity = popularity/100, time_signature =  time_signature-3, loudness = (loudness+60)/60, key = key/11, tempo = tempo/1000)
